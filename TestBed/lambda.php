@@ -21,46 +21,46 @@ function ()
 };
 
 // Lambda function (anonymous function, which is assigned to a variable)
-$helloLambda = function () {
+$helloLambdaFunction = function () {
     return "Say hello to my Lambda function\r\n";
 };
 
 // Call Lambda function
-echo $helloLambda(); // Returns "Say hello to my Lambda function"
+echo $helloLambdaFunction(); // Returns "Say hello to my Lambda function"
 
 // Passing Lambda to a function, which is known as a callback.
-function regularFunctionSimple($callbackFunction)
+function regularFunctionCallback($callbackFunction)
 {
     echo $callbackFunction(); //Call the callback
 }
 
 // Call regular function and passing an anonymous function
-regularFunctionSimple(function () {
+regularFunctionCallback(function () {
     return "Say hello to my anonymous function\r\n";
 }); // Returns "Say hello to my anonymous function"
 
 // Call regular function and passing a Lambda function
-regularFunctionSimple($helloLambda); // Returns "Say hello to my Lambda function"
-
-// Passing Lambda to a function and call it explicitly with the call_user_func function
-function regularFunctionExplicit($callbackFunction)
-{
-    echo call_user_func($callbackFunction); //Call the callback
-}
-
-// Call regular function and passing a Lambda function
-regularFunctionExplicit($helloLambda); // Returns "Say hello to my Lambda function"
+regularFunctionCallback($helloLambdaFunction); // Returns "Say hello to my Lambda function"
 
 // Lambda function (anonymous function, which is assigned to a variable) with two parameters
-$helloLambdaParameter = function ($param1, $param2) {
+$helloLambdaFunctionParameter = function ($param1, $param2) {
     return "Say hello to my Lambda function with ". $param1 . " and " . $param2 . "\r\n";
 };
 
-// Passing Lambda and an array containing parameters to a function, and call it with the call_user_func_array function
-function regularFunction($callbackFunction, $param_array)
+// Passing Lambda and an array containing parameters to a function, and call it with two parameters
+function regularFunctionCallbackParameter($callbackFunction, $param1, $param2)
 {
-    echo call_user_func_array($callbackFunction, $param_array); //Call the callback and passing the parameters
+    echo $callbackFunction($param1, $param2); //Call the callback and passing the parameters
+}
+
+// Call regular function and passing a Lambda function with the two parameters
+regularFunctionCallbackParameter($helloLambdaFunctionParameter,"param one","param two");
+
+// Passing Lambda and an array containing parameters to a function, and call it with the parameter array
+function regularFunctionCallbackArray($callbackFunction, $param_array)
+{
+    echo $callbackFunction(...$param_array); //Call the callback and passing the parameters by using ... for variable arguments PHP 5.6+
 }
 
 // Call regular function and passing a Lambda function with a parameter array
-regularFunction($helloLambdaParameter, array("param one","param two")); // Returns "Say hello to my Lambda function with param one and param two"
+regularFunctionCallbackArray($helloLambdaFunctionParameter, array("param one","param two")); // Returns "Say hello to my Lambda function with param one and param two"
